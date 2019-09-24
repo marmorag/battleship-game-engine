@@ -1,4 +1,4 @@
-import Game from "../Game";
+import Game from "../src/Game";
 
 describe('Behavior', () => {
     it('should be able to initialize a new game', function () {
