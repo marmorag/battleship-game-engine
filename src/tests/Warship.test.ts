@@ -1,4 +1,14 @@
-import {Carrier, Coordinate, Cruiser, Destroyer, Orientation, WarshipClass, WarshipPartStatus} from "..";
+import {
+    Carrier,
+    Coordinate,
+    Cruiser,
+    Destroyer,
+    Frigate,
+    Orientation,
+    WarshipClass,
+    WarshipNotPlacedException,
+    WarshipPartStatus
+} from "..";
 
 describe('Warship - Base Behavior', () => {
     it('should be able to be create', function () {
@@ -32,7 +42,123 @@ describe('Warship - Base Behavior', () => {
         expect(ussEnterprise.isAlive()).toBe(true);
     });
 
-    it('should be able to be destroyer', function () {
+    it('should not be able to be hit not on ship : NORTH', function () {
+        let ussPaladin = new Frigate();
+        ussPaladin.setPosition(new Coordinate(10, 5), Orientation.NORTH);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+    });
+
+    it('should not be able to be hit not on ship : SOUTH', function () {
+        let ussPaladin = new Frigate();
+        ussPaladin.setPosition(new Coordinate(10, 5), Orientation.SOUTH);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+    });
+
+    it('should not be able to be hit not on ship : WEST', function () {
+        let ussPaladin = new Frigate();
+        ussPaladin.setPosition(new Coordinate(10, 5), Orientation.WEST);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+    });
+    it('should not be able to be hit not on ship : EAST', function () {
+        let ussPaladin = new Frigate();
+        ussPaladin.setPosition(new Coordinate(10, 5), Orientation.EAST);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 6))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 5))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(9, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(10, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+
+        expect(ussPaladin.hasBeenHit(new Coordinate(11, 4))).toBe(false);
+        expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
+    });
+
+
+    it('should be able to be destroyed', function () {
         let ussCrusader = new Cruiser();
         ussCrusader.setPosition(new Coordinate(10, 5), Orientation.WEST);
 
@@ -52,5 +178,11 @@ describe('Warship - Base Behavior', () => {
             WarshipPartStatus.HIT,
         ]);
         expect(ussCrusader.isAlive()).toBe(false);
+    });
+
+    it('should throw an exception if warship has not been placed', function () {
+        let ussBroken = new Carrier();
+
+        expect(() => ussBroken.hasBeenHit(new Coordinate(0, 0))).toThrow(WarshipNotPlacedException)
     });
 });

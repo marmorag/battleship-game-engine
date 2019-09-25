@@ -7,4 +7,7 @@ module.exports = {
     },
     moduleFileExtensions: ['ts', 'js'],
     verbose: true,
+    coverageDirectory: './coverage/',
+    collectCoverage: !!process.env.CI,
+    collectCoverageFrom: ['src/**/*.ts'],
 };

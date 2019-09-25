@@ -1,5 +1,5 @@
-import {Coordinate, Orientation} from "..";
-import {InvalidOrientationException} from "..";
+import {Coordinate, InvalidOrientationException, Orientation} from "..";
+import {WarshipNotPlacedException} from "..";
 
 export enum WarshipClass {
     CARRIER,
@@ -41,23 +41,25 @@ export abstract class Warship {
     }
 
     public hasBeenHit(coordinate: Coordinate): Boolean {
+        if (!this._head || this._orientation === null) {
+            throw new WarshipNotPlacedException();
+        }
+
         let hasHit: Boolean = false;
 
         switch (this._orientation) {
             case Orientation.NORTH:
-                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + this._size)) && this._head.x === coordinate.x;
+                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + (this._size - 1))) && this._head.x === coordinate.x;
                 break;
             case Orientation.SOUTH:
-                hasHit = ((this._head.y - this._size) <= coordinate.y && coordinate.y <= this._head.y) && this._head.x === coordinate.x;
+                hasHit = ((this._head.y - (this._size - 1)) <= coordinate.y && coordinate.y <= this._head.y) && this._head.x === coordinate.x;
                 break;
             case Orientation.EAST:
-                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + this._size)) && this._head.y === coordinate.y;
+                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + (this._size - 1))) && this._head.y === coordinate.y;
                 break;
             case Orientation.WEST:
-                hasHit = ((this._head.x - this._size) <= coordinate.x && coordinate.x <= this._head.x) && this._head.y === coordinate.y;
+                hasHit = ((this._head.x - (this._size - 1)) <= coordinate.x && coordinate.x <= this._head.x) && this._head.y === coordinate.y;
                 break;
-            default:
-                throw new InvalidOrientationException();
         }
 
         if (hasHit) {
@@ -103,10 +105,10 @@ export abstract class Warship {
                 hitPosition = this._head.y - coordinate.y;
                 break;
             case Orientation.EAST:
-                hitPosition = coordinate.y - this._head.y;
+                hitPosition = coordinate.x - this._head.x;
                 break;
             case Orientation.WEST:
-                hitPosition = this._head.y - coordinate.y;
+                hitPosition = this._head.x - coordinate.x;
                 break;
             default:
                 throw new InvalidOrientationException();

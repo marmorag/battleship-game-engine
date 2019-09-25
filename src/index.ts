@@ -8,3 +8,4 @@ export * from "./utils/Coordinate";
 export * from "./exception/InvalidOrientationException";
 export default Game
 
+export {WarshipNotPlacedException} from "./exception/WarshipNotPlacedException";
