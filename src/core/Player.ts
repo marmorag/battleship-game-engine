@@ -1,5 +1,6 @@
 import {Grid} from "./Grid";
 import {Warship} from "./Warship";
+import {Coordinate} from "..";
 
 
 export enum Team {
@@ -7,18 +8,19 @@ export enum Team {
     BLACK
 }
 
+interface Playable {
+    play(): Coordinate;
+}
+
 export class Player {
 
     private grid: Grid;
     private team: Team;
-    private isBot: Boolean;
     private boats: Warship[];
 
     constructor(grid: Grid, team: Team, isBot: Boolean = true) {
         this.grid = grid;
         this.team = team;
-        this.isBot = isBot;
     }
-
 }
 
