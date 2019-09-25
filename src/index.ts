@@ -1,5 +1,8 @@
-import Game from "./Game";
+import {Game} from "./core/Game";
 
-const game = new Game();
-
-game.start();
+export * from "./core/Player";
+export * from './core/Grid';
+export * from './core/Game';
+export * from "./core/Warship";
+export * from "./utils/Coordinate";
+export default Game
