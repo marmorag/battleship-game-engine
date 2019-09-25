@@ -1,8 +1,10 @@
 module.exports = {
+    "roots": [
+        "<rootDir>/src"
+    ],
     transform: {
-        "^.+\\.jsx?$": "babel-jest",
-        "^.+\\.tsx?$": "ts-jest",
+        "^.+\\.tsx?$": "ts-jest"
     },
-    testEnvironment: 'node',
+    moduleFileExtensions: ['ts', 'js'],
     verbose: true,
 };

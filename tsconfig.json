@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "esnext",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "target": "es6",
-    "strict": true
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/lib"
   },
   "include": [
-    "src/**/*"
+    "src/**/*.ts"
   ]
 }
