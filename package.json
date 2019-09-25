@@ -17,6 +17,7 @@
     "typescript": "^3.6.3"
   },
   "scripts": {
-    "dev": "concurrently -k -n \"Typescript,Nodemon\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/index.js\""
+    "dev": "concurrently -k -n \"Typescript,Nodemon\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/lib/index.js\"",
+    "test": "jest"
   }
 }
