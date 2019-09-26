@@ -1,5 +1,5 @@
 import {Coordinate, InvalidOrientationException, Orientation, WarshipNotPlacedException} from "..";
-import {WarshipAlreadyPlacedException} from "../exception/WarshipAlreadyPlacedException";
+import {WarshipAlreadyPlacedException} from "..";
 
 export enum WarshipClass {
     CARRIER,
@@ -11,6 +11,12 @@ export enum WarshipClass {
 export enum WarshipPartStatus {
     NOMINAL,
     HIT
+}
+
+export enum WarshipPlacementStatus {
+    OUTBOUND,
+    COLLIDE,
+    AVAILABLE
 }
 
 export abstract class Warship {
@@ -36,7 +42,7 @@ export abstract class Warship {
     }
 
     public setPosition(coordinate: Coordinate, orientation: Orientation) {
-        if (this._head) {
+        if (!!this._head) {
             throw new WarshipAlreadyPlacedException();
         }
 
@@ -71,6 +77,11 @@ export abstract class Warship {
         }
 
         return hasHit;
+    }
+
+
+    collide(warship: Warship): Boolean {
+        return false;
     }
 
 

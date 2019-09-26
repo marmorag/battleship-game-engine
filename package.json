@@ -20,5 +20,6 @@
   "scripts": {
     "dev": "concurrently -k -n \"Typescript,Nodemon\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/lib/index.js\"",
     "test": "jest"
-  }
+  },
+  "dependencies": {}
 }

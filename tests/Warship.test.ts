@@ -1,18 +1,23 @@
 import {
+    Warship,
     Carrier,
-    Coordinate,
     Cruiser,
     Destroyer,
     Frigate,
-    Orientation, WarshipAlreadyPlacedException,
     WarshipClass,
+    WarshipPartStatus,
+    WarshipAlreadyPlacedException,
     WarshipNotPlacedException,
-    WarshipPartStatus
+    Coordinate,
+    Orientation,
 } from "../src";
 
 describe('Warship - Base Behavior', () => {
     it('should be able to be create', function () {
         let ussCalister = new Carrier();
+
+        expect(ussCalister).toBeInstanceOf(Warship);
+        expect(ussCalister).toBeInstanceOf(Carrier);
 
         expect(ussCalister.class()).toBe(WarshipClass.CARRIER);
         expect(ussCalister.size()).toBe(4);

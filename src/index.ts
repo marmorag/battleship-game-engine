@@ -6,7 +6,10 @@ export * from './core/Game';
 export * from "./core/Warship";
 export * from "./utils/Coordinate";
 export * from "./exception/InvalidOrientationException";
-export default Game
+export * from "./exception/WarshipNotPlacedException";
+export * from "./exception/WarshipAlreadyPlacedException";
 
-export {WarshipNotPlacedException} from "./exception/WarshipNotPlacedException";
-export {WarshipAlreadyPlacedException} from "./exception/WarshipAlreadyPlacedException";
+export default Game
+export {GameConfig} from "./utils/GameConfig";
+export {InvalidPlayerException} from "./exception/InvalidPlayerException";
+export {InvalidPlacementException} from "./exception/InvalidPlacementException";
