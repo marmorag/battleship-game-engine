@@ -1,5 +1,5 @@
-import {Coordinate, InvalidOrientationException, Orientation} from "..";
-import {WarshipNotPlacedException} from "..";
+import {Coordinate, InvalidOrientationException, Orientation, WarshipNotPlacedException} from "..";
+import {WarshipAlreadyPlacedException} from "../exception/WarshipAlreadyPlacedException";
 
 export enum WarshipClass {
     CARRIER,
@@ -36,6 +36,10 @@ export abstract class Warship {
     }
 
     public setPosition(coordinate: Coordinate, orientation: Orientation) {
+        if (this._head) {
+            throw new WarshipAlreadyPlacedException();
+        }
+
         this._head = coordinate;
         this._orientation = orientation;
     }

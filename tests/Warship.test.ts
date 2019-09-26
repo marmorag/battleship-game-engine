@@ -4,11 +4,11 @@ import {
     Cruiser,
     Destroyer,
     Frigate,
-    Orientation,
+    Orientation, WarshipAlreadyPlacedException,
     WarshipClass,
     WarshipNotPlacedException,
     WarshipPartStatus
-} from "..";
+} from "../src";
 
 describe('Warship - Base Behavior', () => {
     it('should be able to be create', function () {
@@ -42,7 +42,7 @@ describe('Warship - Base Behavior', () => {
         expect(ussEnterprise.isAlive()).toBe(true);
     });
 
-    it('should not be able to be hit not on ship : NORTH', function () {
+    it('should be hit when stirke is not on ship : NORTH', function () {
         let ussPaladin = new Frigate();
         ussPaladin.setPosition(new Coordinate(10, 5), Orientation.NORTH);
 
@@ -71,7 +71,7 @@ describe('Warship - Base Behavior', () => {
         expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
     });
 
-    it('should not be able to be hit not on ship : SOUTH', function () {
+    it('should be hit when stirke is not on ship : SOUTH', function () {
         let ussPaladin = new Frigate();
         ussPaladin.setPosition(new Coordinate(10, 5), Orientation.SOUTH);
 
@@ -100,7 +100,7 @@ describe('Warship - Base Behavior', () => {
         expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
     });
 
-    it('should not be able to be hit not on ship : WEST', function () {
+    it('should be hit when stirke is not on ship : WEST', function () {
         let ussPaladin = new Frigate();
         ussPaladin.setPosition(new Coordinate(10, 5), Orientation.WEST);
 
@@ -128,7 +128,8 @@ describe('Warship - Base Behavior', () => {
         expect(ussPaladin.hasBeenHit(new Coordinate(11, 4))).toBe(false);
         expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
     });
-    it('should not be able to be hit not on ship : EAST', function () {
+
+    it('should be hit when stirke is not on ship : EAST', function () {
         let ussPaladin = new Frigate();
         ussPaladin.setPosition(new Coordinate(10, 5), Orientation.EAST);
 
@@ -157,7 +158,6 @@ describe('Warship - Base Behavior', () => {
         expect(ussPaladin.partStatus()).toStrictEqual([WarshipPartStatus.NOMINAL]);
     });
 
-
     it('should be able to be destroyed', function () {
         let ussCrusader = new Cruiser();
         ussCrusader.setPosition(new Coordinate(10, 5), Orientation.WEST);
@@ -182,7 +182,12 @@ describe('Warship - Base Behavior', () => {
 
     it('should throw an exception if warship has not been placed', function () {
         let ussBroken = new Carrier();
-
         expect(() => ussBroken.hasBeenHit(new Coordinate(0, 0))).toThrow(WarshipNotPlacedException)
+    });
+
+    it('should throw an exception if warship is already placed and trying to place it', function () {
+        let ussBroken = new Frigate();
+        ussBroken.setPosition(new Coordinate(0, 0), Orientation.NORTH);
+        expect(() => ussBroken.setPosition(new Coordinate(0, 0), Orientation.NORTH)).toThrow(WarshipAlreadyPlacedException);
     });
 });

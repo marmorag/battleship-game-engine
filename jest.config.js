@@ -1,10 +1,10 @@
 module.exports = {
-    "roots": [
-        "<rootDir>/src"
-    ],
     transform: {
         "^.+\\.tsx?$": "ts-jest"
     },
+    modulePathIgnorePatterns: [
+      "<rootDir>/dist"
+    ],
     moduleFileExtensions: ['ts', 'js'],
     verbose: true,
     coverageDirectory: './coverage/',

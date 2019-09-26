@@ -9,3 +9,4 @@ export * from "./exception/InvalidOrientationException";
 export default Game
 
 export {WarshipNotPlacedException} from "./exception/WarshipNotPlacedException";
+export {WarshipAlreadyPlacedException} from "./exception/WarshipAlreadyPlacedException";
