@@ -70,6 +70,13 @@ export class Player {
         return (hasHit)? ((destroyed)? ShotStatus.SINK : ShotStatus.HIT) : ShotStatus.MISS;
     }
 
+    /**
+     * @param coordinate
+     * @param orientation
+     * @param warship
+     *
+     * @throws InvalidPlacementException
+     */
     placeWarship(coordinate: Coordinate, orientation: Orientation, warship: Warship) {
         let placementStatus = this.grid.isPlaceable(coordinate, orientation, warship);
 

@@ -1,4 +1,4 @@
-import {Carrier, Cruiser, Destroyer, Frigate, Warship} from "..";
+import {Carrier, Cruiser, Destroyer, Frigate, Player, Warship} from "..";
 import {InvalidGridSizeException} from "../exception/InvalidGridSizeException";
 
 export const SMALL_SIZE_GRID = 5;
@@ -7,38 +7,41 @@ export const LARGE_SIZE_GRID = 15;
 
 export class GameConfig {
     public gridSize: number = 10;
-    private _warshipPool: Warship[];
+    private _randomStart: Boolean = true;
+    private _playerOrder: Array<Player> = [];
 
-    static getDefault() {
+    static getDefault(): GameConfig {
         return new GameConfig();
     }
 
+    defineStart(firstPlayer: Player, secondPlayer: Player) {
+        this._randomStart = false;
+        this._playerOrder = [firstPlayer, secondPlayer];
+    }
+
+    get randomStart(): Boolean {
+        return this._randomStart;
+    }
+
+    get playerOrder(): Array<Player> {
+        return this._playerOrder;
+    }
+
     get warshipPool(): Warship[] {
-        if (!this._warshipPool) {
-            this._buildWarshipPool();
-        }
-        return this._warshipPool;
-    }
-
-    set warshipPool(value: Warship[]) {
-        this._warshipPool = value;
-    }
-
-    private _buildWarshipPool() {
         if (3 <= this.gridSize && this.gridSize <= SMALL_SIZE_GRID) {
-            this._warshipPool = [
+            return [
                 new Destroyer(),
                 new Frigate()
             ];
         } else if (this.gridSize <= MEDIUM_SIZE_GRID) {
-            this._warshipPool = [
+            return [
                 new Carrier(),
                 new Destroyer(),
                 new Cruiser(),
                 new Frigate(),
             ];
         } else if (this.gridSize >= LARGE_SIZE_GRID) {
-            this._warshipPool = [
+            return [
                 new Carrier(),
                 new Destroyer(),
                 new Destroyer(),

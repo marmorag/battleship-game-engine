@@ -13,3 +13,4 @@ export default Game
 export {GameConfig} from "./utils/GameConfig";
 export {InvalidPlayerException} from "./exception/InvalidPlayerException";
 export {InvalidPlacementException} from "./exception/InvalidPlacementException";
+export {InvalidGameStatusException} from "./exception/InvalidGameStatusException";
