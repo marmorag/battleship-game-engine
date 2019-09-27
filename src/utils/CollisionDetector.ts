@@ -8,10 +8,12 @@ export enum CollisionStatus {
 export class CollisionDetector {
 
     public static detectWarshipCollision(warshipOrigin: Warship, warshipTested: Warship): CollisionStatus {
+        if (!warshipOrigin.head() || !warshipTested.head()) {
+            return CollisionStatus.MISS;
+        }
+
         const originCoordinate = CollisionDetector._processCoordinate(warshipOrigin);
         const testedCoordinate = CollisionDetector._processCoordinate(warshipTested);
-
-        console.log(originCoordinate, testedCoordinate);
 
         return CollisionDetector._collide(originCoordinate, testedCoordinate);
     }

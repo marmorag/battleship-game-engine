@@ -2,6 +2,7 @@ import {Carrier, Coordinate, Destroyer, Frigate, Orientation} from "../src";
 import {CollisionDetector, CollisionStatus} from "../src/utils/CollisionDetector";
 
 describe("Collision Detector - Behavior", () => {
+
     it("should detect collision between two warship", () => {
         const titanic = new Destroyer();
         titanic.setPosition(new Coordinate(0, 0), Orientation.NORTH);
@@ -16,6 +17,15 @@ describe("Collision Detector - Behavior", () => {
         sun.setPosition(new Coordinate(0, 0), Orientation.EAST);
         const earth = new Frigate();
         earth.setPosition(new Coordinate(1, 1), Orientation.SOUTH);
+
+        expect(CollisionDetector.detectWarshipCollision(sun, earth)).toBe(CollisionStatus.MISS);
+    });
+
+    it("should not detect collision between two more distant warship", () => {
+        const sun = new Carrier();
+        sun.setPosition(new Coordinate(0, 0), Orientation.EAST);
+        const earth = new Frigate();
+        earth.setPosition(new Coordinate(5, 5), Orientation.SOUTH);
 
         expect(CollisionDetector.detectWarshipCollision(sun, earth)).toBe(CollisionStatus.MISS);
     });
