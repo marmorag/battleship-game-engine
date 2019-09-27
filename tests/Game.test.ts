@@ -10,7 +10,7 @@ describe('Behavior', () => {
         let obiWan = new Player(Team.WHITE);
         let anakin = new Player(Team.BLACK);
 
-        it('could initialize a game', function () {
+        it('should be able to initialize a game', function () {
             expect(game.hasStarted).toBe(false);
 
             gameConfig.gridSize = SMALL_SIZE_GRID;
@@ -61,6 +61,8 @@ describe('Behavior', () => {
 
             expect(game.playTurn(new Coordinate(0, 0))).toBe(ShotStatus.MISS);
 
+            expect(anakin.grid.hitPositions).toStrictEqual([new Coordinate(0,0)]);
+
             expect(game.currentPlayer).toStrictEqual(anakin);
             expect(game.currentTarget).toStrictEqual(obiWan);
 
@@ -77,8 +79,45 @@ describe('Behavior', () => {
             expect(anakin.warships[1].isAlive()).toBe(true);
         });
 
-        it('should be able to destroy a warship', function () {
+        it('should be able to hit a boat', function () {
+            expect(game.playTurn(new Coordinate(4,3))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(2,3))).toBe(ShotStatus.HIT);
 
+            expect(anakin.warships[0].partStatus())
+                .toStrictEqual([WarshipPartStatus.HIT, WarshipPartStatus.NOMINAL, WarshipPartStatus.NOMINAL]);
+            expect(anakin.warships[0].isAlive()).toBe(true);
+        });
+
+        it('should be able to destroy a warship', function () {
+            expect(game.playTurn(new Coordinate(4,4))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(4,4))).toBe(ShotStatus.SINK);
+
+            expect(anakin.warships[1].partStatus()).toStrictEqual([WarshipPartStatus.HIT]);
+            expect(anakin.warships[1].isAlive()).toBe(false);
+        });
+
+        it('should be able to win a game', function () {
+            expect(game.playTurn(new Coordinate(4, 2))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(2,2))).toBe(ShotStatus.HIT);
+
+            expect(anakin.isAlive).toBe(true);
+            expect(obiWan.isAlive).toBe(true);
+
+            expect(game.playTurn(new Coordinate(4, 1))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(2,1))).toBe(ShotStatus.SINK);
+
+            expect(anakin.isAlive).toBe(false);
+            expect(obiWan.isAlive).toBe(true);
+
+            let gameResult = game.gameResult;
+
+            expect(gameResult.winner).toStrictEqual(obiWan);
+            expect(gameResult.looser).toStrictEqual(anakin);
+            expect(gameResult.tracker.turnPlayed).toBe(9);
         });
     });
+});
+
+describe('Error case', function () {
+
 });

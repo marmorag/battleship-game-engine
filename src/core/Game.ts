@@ -1,17 +1,20 @@
 import {Grid} from "./Grid";
 import {RandomPicker} from "../utils/RandomPicker";
 import {Player, ShotStatus, Team} from "./Player";
-import {Coordinate, GameConfig, InvalidPlayerException} from "..";
-import {InvalidGameStatusException} from "../exception/InvalidGameStatusException";
+import {Coordinate, GameConfig, InvalidPlayerException, InvalidGameStatusException} from "..";
+import {GameResult} from "../utils/GameResult";
+import {GameStatsTracker} from "../utils/GameStatsTracker";
 
 export class Game {
     private _hasStarted: Boolean = false;
     private _hasEnded: Boolean = false;
+    private _gameStatsTracker: GameStatsTracker;
 
     private _playerWhite: Player;
     private _playerBlack: Player;
     private _currentPlayer: Player = null;
     private _currentTarget: Player = null;
+    private _gameResult: GameResult = null;
 
     start(whitePlayer: Player, blackPlayer: Player, config: GameConfig = GameConfig.getDefault()) {
         if (this._hasStarted) {
@@ -27,11 +30,16 @@ export class Game {
 
         this._init(config);
         this._hasStarted = true;
+        this._gameStatsTracker = new GameStatsTracker();
     }
 
     playTurn(coordinate: Coordinate): ShotStatus {
         if (!this._hasStarted) {
-            throw new InvalidGameStatusException();
+            throw new InvalidGameStatusException('Tha game has not been initialized yet.');
+        }
+
+        if (this._hasEnded) {
+            throw new InvalidGameStatusException('Tha game has ended.');
         }
 
         if (!this._playerBlack.isReady || !this._playerBlack.isReady) {
@@ -39,6 +47,13 @@ export class Game {
         }
 
         let turnStatus = this._currentTarget.hit(coordinate);
+
+        this._gameStatsTracker.logTurn();
+
+        if (!this._currentTarget.isAlive) {
+            this._endGame();
+            return turnStatus;
+        }
 
         this._changeTurn();
         return turnStatus;
@@ -54,6 +69,13 @@ export class Game {
 
     get currentTarget() {
         return this._currentTarget;
+    }
+
+    get gameResult(): GameResult {
+        if (!this._hasEnded) {
+            throw new InvalidGameStatusException('The game has not yet ended. Please retry after some turn.');
+        }
+        return this._gameResult;
     }
 
     private _init(config: GameConfig = null) {
@@ -86,5 +108,10 @@ export class Game {
 
         this._currentPlayer = config.playerOrder[0];
         this._currentTarget = config.playerOrder[1];
+    }
+
+    private _endGame() {
+        this._hasEnded = true;
+        this._gameResult = new GameResult(this._currentPlayer, this._currentTarget, this._gameStatsTracker);
     }
 }

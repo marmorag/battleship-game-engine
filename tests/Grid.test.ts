@@ -7,7 +7,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 1), Orientation.NORTH, ussIntrepid);
@@ -19,7 +19,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 2), Orientation.NORTH, ussIntrepid);
@@ -31,7 +31,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 3), Orientation.NORTH, ussIntrepid);
@@ -43,7 +43,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 3), Orientation.SOUTH, ussIntrepid);
@@ -55,7 +55,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 2), Orientation.SOUTH, ussIntrepid);
@@ -67,7 +67,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 1), Orientation.SOUTH, ussIntrepid);
@@ -79,7 +79,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 1), Orientation.EAST, ussIntrepid);
@@ -91,7 +91,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(2, 1), Orientation.EAST, ussIntrepid);
@@ -103,7 +103,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(3, 1), Orientation.EAST, ussIntrepid);
@@ -115,7 +115,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(3, 1), Orientation.WEST, ussIntrepid);
@@ -127,7 +127,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(2, 1), Orientation.WEST, ussIntrepid);
@@ -139,7 +139,7 @@ describe('Grid - Base Behavior', function () {
         let grid = new Grid(SMALL_SIZE_GRID);
 
         expect(grid.size).toBe(5);
-        expect(grid.hitPosition.length).toBe(0);
+        expect(grid.hitPositions.length).toBe(0);
         expect(grid.warshipPositions.length).toBe(0);
 
         let placeable = grid.isPlaceable(new Coordinate(1, 1), Orientation.WEST, ussIntrepid);

@@ -47,11 +47,11 @@ export class Player {
             return true;
         }
 
-        let alive: Boolean = true;
+        let alive: Array<Boolean> = [];
         for (let wahrsip of this.warships) {
-            alive = alive && wahrsip.isAlive();
+            alive.push(wahrsip.isAlive());
         }
-        return alive;
+        return alive.includes(true);
     }
 
     hit(coordinate: Coordinate) : ShotStatus {
@@ -61,12 +61,12 @@ export class Player {
         for (let warship of this.warships) {
             if (warship.isAlive() && warship.hasBeenHit(coordinate)) {
                 hasHit = true;
-                destroyed = warship.isAlive();
+                destroyed = !warship.isAlive();
                 break;
             }
         }
 
-        this.grid.hitPosition.push(coordinate);
+        this.grid.hitPosition(coordinate);
         return (hasHit)? ((destroyed)? ShotStatus.SINK : ShotStatus.HIT) : ShotStatus.MISS;
     }
 

@@ -3,12 +3,12 @@ import {Warship} from "./Warship";
 
 export class Grid {
     private readonly _size: number;
-    private _hitPosition: Array<Coordinate>;
+    private _hitPositions: Array<Coordinate>;
     private _warshipPositions: Array<Warship>;
 
     constructor(size: number) {
         this._size = size;
-        this._hitPosition = [];
+        this._hitPositions = [];
         this._warshipPositions = [];
     }
 
@@ -24,12 +24,12 @@ export class Grid {
         this._warshipPositions = value;
     }
 
-    get hitPosition(): Array<Coordinate> {
-        return this._hitPosition;
+    get hitPositions(): Array<Coordinate> {
+        return this._hitPositions;
     }
 
-    set hitPosition(value: Array<Coordinate>) {
-        this._hitPosition = value;
+    hitPosition(coordinate: Coordinate) {
+        this._hitPositions.push(coordinate);
     }
 
     isPlaceable(coordinate: Coordinate, orientation: Orientation, warship: Warship): WarshipPlacementStatus {
