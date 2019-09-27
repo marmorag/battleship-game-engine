@@ -5,6 +5,7 @@ import {
     WarshipAlreadyPlacedException,
     WarshipNotPlacedException,
 } from "..";
+import {CollisionDetector, CollisionStatus} from "../utils/CollisionDetector";
 
 export enum WarshipClass {
     CARRIER,
@@ -89,7 +90,7 @@ export abstract class Warship {
     }
 
     public collide(warship: Warship): boolean {
-        return false;
+        return CollisionDetector.detectWarshipCollision(this, warship) === CollisionStatus.COLLIDE;
     }
 
     public class(): WarshipClass {
