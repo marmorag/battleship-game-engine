@@ -1,3 +1,10 @@
+export enum Orientation {
+    NORTH,
+    EAST,
+    WEST,
+    SOUTH,
+}
+
 export class Coordinate {
     private readonly _x: number;
     private readonly _y: number;
@@ -14,11 +21,4 @@ export class Coordinate {
     get y(): number {
         return this._y;
     }
-}
-
-export enum Orientation {
-    NORTH,
-    EAST,
-    WEST,
-    SOUTH
 }

@@ -1,16 +1,16 @@
 import {Coordinate, Game, GameConfig, Orientation, Player, ShotStatus, Team, WarshipPartStatus} from "../src";
 import {SMALL_SIZE_GRID} from "../src/utils/GameConfig";
 
-describe('Behavior', () => {
+describe("Behavior", () => {
 
-    describe('should be able to play game', function () {
+    describe("should be able to play game", () => {
         const game = new Game();
         const gameConfig = new GameConfig();
 
-        let obiWan = new Player(Team.WHITE);
-        let anakin = new Player(Team.BLACK);
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.BLACK);
 
-        it('should be able to initialize a game', function () {
+        it("should be able to initialize a game", () => {
             expect(game.hasStarted).toBe(false);
 
             gameConfig.gridSize = SMALL_SIZE_GRID;
@@ -27,41 +27,41 @@ describe('Behavior', () => {
             expect(anakin.warships.length).toBe(2);
         });
 
-        it('should be able to place players warship', function () {
-            let radianVII = obiWan.warships[0];
-            let tantiveIV = obiWan.warships[1];
+        it("should be able to place players warship", () => {
+            const radianVII = obiWan.warships[0];
+            const tantiveIV = obiWan.warships[1];
 
-            obiWan.placeWarship(new Coordinate(0,0), Orientation.NORTH, radianVII);
+            obiWan.placeWarship(new Coordinate(0, 0), Orientation.NORTH, radianVII);
 
-            expect(radianVII.head()).toStrictEqual(new Coordinate(0,0));
+            expect(radianVII.head()).toStrictEqual(new Coordinate(0, 0));
             expect(radianVII.orientation()).toBe(Orientation.NORTH);
 
             obiWan.placeWarship(new Coordinate(1, 1), Orientation.EAST, tantiveIV);
 
-            expect(tantiveIV.head()).toStrictEqual(new Coordinate(1,1));
+            expect(tantiveIV.head()).toStrictEqual(new Coordinate(1, 1));
             expect(tantiveIV.orientation()).toBe(Orientation.EAST);
 
-            let scimitar = anakin.warships[0];
-            let rogueShadow = anakin.warships[1];
+            const scimitar = anakin.warships[0];
+            const rogueShadow = anakin.warships[1];
 
-            anakin.placeWarship(new Coordinate(2,3), Orientation.SOUTH, scimitar);
+            anakin.placeWarship(new Coordinate(2, 3), Orientation.SOUTH, scimitar);
 
-            expect(scimitar.head()).toStrictEqual(new Coordinate(2,3));
+            expect(scimitar.head()).toStrictEqual(new Coordinate(2, 3));
             expect(scimitar.orientation()).toBe(Orientation.SOUTH);
 
-            anakin.placeWarship(new Coordinate(4,4), Orientation.WEST, rogueShadow);
+            anakin.placeWarship(new Coordinate(4, 4), Orientation.WEST, rogueShadow);
 
-            expect(rogueShadow.head()).toStrictEqual(new Coordinate(4,4));
+            expect(rogueShadow.head()).toStrictEqual(new Coordinate(4, 4));
             expect(rogueShadow.orientation()).toBe(Orientation.WEST);
         });
 
-        it('should be able to play a turn', function () {
+        it("should be able to play a turn", () => {
             expect(game.currentPlayer).toBeInstanceOf(Player);
             expect(game.currentPlayer).toStrictEqual(obiWan);
 
             expect(game.playTurn(new Coordinate(0, 0))).toBe(ShotStatus.MISS);
 
-            expect(anakin.grid.hitPositions).toStrictEqual([new Coordinate(0,0)]);
+            expect(anakin.grid.hitPositions).toStrictEqual([new Coordinate(0, 0)]);
 
             expect(game.currentPlayer).toStrictEqual(anakin);
             expect(game.currentTarget).toStrictEqual(obiWan);
@@ -79,37 +79,37 @@ describe('Behavior', () => {
             expect(anakin.warships[1].isAlive()).toBe(true);
         });
 
-        it('should be able to hit a boat', function () {
-            expect(game.playTurn(new Coordinate(4,3))).toBe(ShotStatus.MISS);
-            expect(game.playTurn(new Coordinate(2,3))).toBe(ShotStatus.HIT);
+        it("should be able to hit a boat", () => {
+            expect(game.playTurn(new Coordinate(4, 3))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(2, 3))).toBe(ShotStatus.HIT);
 
             expect(anakin.warships[0].partStatus())
                 .toStrictEqual([WarshipPartStatus.HIT, WarshipPartStatus.NOMINAL, WarshipPartStatus.NOMINAL]);
             expect(anakin.warships[0].isAlive()).toBe(true);
         });
 
-        it('should be able to destroy a warship', function () {
-            expect(game.playTurn(new Coordinate(4,4))).toBe(ShotStatus.MISS);
-            expect(game.playTurn(new Coordinate(4,4))).toBe(ShotStatus.SINK);
+        it("should be able to destroy a warship", () => {
+            expect(game.playTurn(new Coordinate(4, 4))).toBe(ShotStatus.MISS);
+            expect(game.playTurn(new Coordinate(4, 4))).toBe(ShotStatus.SINK);
 
             expect(anakin.warships[1].partStatus()).toStrictEqual([WarshipPartStatus.HIT]);
             expect(anakin.warships[1].isAlive()).toBe(false);
         });
 
-        it('should be able to win a game', function () {
+        it("should be able to win a game", () => {
             expect(game.playTurn(new Coordinate(4, 2))).toBe(ShotStatus.MISS);
-            expect(game.playTurn(new Coordinate(2,2))).toBe(ShotStatus.HIT);
+            expect(game.playTurn(new Coordinate(2, 2))).toBe(ShotStatus.HIT);
 
             expect(anakin.isAlive).toBe(true);
             expect(obiWan.isAlive).toBe(true);
 
             expect(game.playTurn(new Coordinate(4, 1))).toBe(ShotStatus.MISS);
-            expect(game.playTurn(new Coordinate(2,1))).toBe(ShotStatus.SINK);
+            expect(game.playTurn(new Coordinate(2, 1))).toBe(ShotStatus.SINK);
 
             expect(anakin.isAlive).toBe(false);
             expect(obiWan.isAlive).toBe(true);
 
-            let gameResult = game.gameResult;
+            const gameResult = game.gameResult;
 
             expect(gameResult.winner).toStrictEqual(obiWan);
             expect(gameResult.looser).toStrictEqual(anakin);
@@ -118,6 +118,8 @@ describe('Behavior', () => {
     });
 });
 
-describe('Error case', function () {
-
+describe("Error case", () => {
+    it("should throw exception if game not started and try to play a turn", () => {
+        expect(2).toBe(2);
+    });
 });

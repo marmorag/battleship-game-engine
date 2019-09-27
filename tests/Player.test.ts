@@ -1,5 +1,5 @@
-describe('Player - Base Behavior', function () {
-    it('should work', function () {
+describe("Player - Base Behavior", () => {
+    it("should work", () => {
         expect(1 + 1).toBe(2);
     });
 });

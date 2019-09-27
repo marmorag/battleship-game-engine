@@ -1,14 +1,23 @@
 {
-  "extends": [
-    "tslint-config-airbnb",
-    "tslint-config-prettier"
-  ],
-  "rules": {
-    "typedef": [
-      true,
-      "parameter",
-      "property-declaration",
-      "member-variable-declaration"
-    ]
-  }
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "typedef": [
+            true,
+            "parameter",
+            "property-declaration",
+            "member-variable-declaration"
+        ],
+        "variable-name": {
+            "options": [
+                "check-format",
+                "allow-leading-underscore",
+                "ban-keywords"
+            ]
+        }
+    },
+    "rulesDirectory": []
 }

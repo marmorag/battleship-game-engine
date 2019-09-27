@@ -1,4 +1,4 @@
 export class InvalidGridSizeException implements Error {
-    message: string;
-    name: string;
+    public message: string;
+    public name: string;
 }

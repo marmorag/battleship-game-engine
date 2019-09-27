@@ -1,6 +1,6 @@
 export class InvalidPlayerException implements Error {
-    message: string = 'An error happend with a player';
-    name: string = InvalidPlayerException.name;
+    public message: string = "An error happend with a player";
+    public name: string = InvalidPlayerException.name;
 
     constructor(message: string) {
         this.message = message;

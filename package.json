@@ -15,10 +15,12 @@
     "jest": "^24.9.0",
     "nodemon": "^1.19.2",
     "ts-jest": "^24.1.0",
+    "tslint": "^5.20.0",
     "typescript": "^3.6.3"
   },
   "scripts": {
     "dev": "concurrently -k -n \"Typescript,Nodemon\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"nodemon dist/lib/index.js\"",
+    "lint": "tslint --project tsconfig.json -t verbose",
     "test": "jest"
   },
   "dependencies": {}

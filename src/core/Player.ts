@@ -1,11 +1,10 @@
+import {Coordinate, InvalidPlacementException, Orientation} from "..";
 import {Grid} from "./Grid";
 import {Warship, WarshipPlacementStatus} from "./Warship";
-import {Coordinate, InvalidPlacementException, Orientation} from "..";
-
 
 export enum Team {
     WHITE,
-    BLACK
+    BLACK,
 }
 
 export enum ShotStatus {
@@ -42,23 +41,23 @@ export class Player {
         return this._team;
     }
 
-    get isAlive(): Boolean {
+    get isAlive(): boolean {
         if (!this._grid) {
             return true;
         }
 
-        let alive: Array<Boolean> = [];
-        for (let wahrsip of this.warships) {
+        const alive: boolean[] = [];
+        for (const wahrsip of this.warships) {
             alive.push(wahrsip.isAlive());
         }
         return alive.includes(true);
     }
 
-    hit(coordinate: Coordinate) : ShotStatus {
-        let hasHit: Boolean = false;
-        let destroyed: Boolean = false;
+    public hit(coordinate: Coordinate): ShotStatus {
+        let hasHit: boolean = false;
+        let destroyed: boolean = false;
 
-        for (let warship of this.warships) {
+        for (const warship of this.warships) {
             if (warship.isAlive() && warship.hasBeenHit(coordinate)) {
                 hasHit = true;
                 destroyed = !warship.isAlive();
@@ -67,7 +66,7 @@ export class Player {
         }
 
         this.grid.hitPosition(coordinate);
-        return (hasHit)? ((destroyed)? ShotStatus.SINK : ShotStatus.HIT) : ShotStatus.MISS;
+        return (hasHit) ? ((destroyed) ? ShotStatus.SINK : ShotStatus.HIT) : ShotStatus.MISS;
     }
 
     /**
@@ -77,29 +76,28 @@ export class Player {
      *
      * @throws InvalidPlacementException
      */
-    placeWarship(coordinate: Coordinate, orientation: Orientation, warship: Warship) {
-        let placementStatus = this.grid.isPlaceable(coordinate, orientation, warship);
+    public placeWarship(coordinate: Coordinate, orientation: Orientation, warship: Warship) {
+        const placementStatus = this.grid.isPlaceable(coordinate, orientation, warship);
 
         if (placementStatus === WarshipPlacementStatus.AVAILABLE) {
             warship.setPosition(coordinate, orientation);
         } else if (placementStatus === WarshipPlacementStatus.OUTBOUND) {
-            throw new InvalidPlacementException('The given placement is out of the grid bound. Please provide a valid one.');
+            throw new InvalidPlacementException("The given placement is out of the grid bound. Please provide a valid one.");
         } else if (placementStatus === WarshipPlacementStatus.COLLIDE) {
-            throw new InvalidPlacementException('The given placement is colliding with another warship placement. Please provide a valid one.');
+            throw new InvalidPlacementException("The given placement is colliding with another warship placement. Please provide a valid one.");
         }
     }
 
-    get isReady(): Boolean {
+    get isReady(): boolean {
         if (!this._grid) {
             return false;
         }
 
-        let ready: Boolean = true;
-        for (let warship of this.warships) {
+        let ready: boolean = true;
+        for (const warship of this.warships) {
             ready = ready && !!warship.head();
         }
 
         return ready;
     }
 }
-

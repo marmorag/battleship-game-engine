@@ -9,7 +9,7 @@ export class GameResult {
     constructor(winner: Player, looser: Player, tracker: GameStatsTracker) {
         this._winner = winner;
         this._looser = looser;
-        this._tracker= tracker;
+        this._tracker = tracker;
     }
 
     get winner(): Player {

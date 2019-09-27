@@ -1,29 +1,34 @@
-import {Coordinate, InvalidOrientationException, Orientation, WarshipNotPlacedException} from "..";
-import {WarshipAlreadyPlacedException} from "..";
+import {
+    Coordinate,
+    InvalidOrientationException,
+    Orientation,
+    WarshipAlreadyPlacedException,
+    WarshipNotPlacedException,
+} from "..";
 
 export enum WarshipClass {
     CARRIER,
     DESTROYER,
     CRUISER,
-    FRIGATE
+    FRIGATE,
 }
 
 export enum WarshipPartStatus {
     NOMINAL,
-    HIT
+    HIT,
 }
 
 export enum WarshipPlacementStatus {
     OUTBOUND,
     COLLIDE,
-    AVAILABLE
+    AVAILABLE,
 }
 
 export abstract class Warship {
     protected _class: WarshipClass;
     protected _size: number;
-    protected _partStatus: Array<WarshipPartStatus>;
-    protected _isAlive: Boolean;
+    protected _partStatus: WarshipPartStatus[];
+    protected _isAlive: boolean;
 
     /**
      * Head of the ship coordinate
@@ -50,25 +55,29 @@ export abstract class Warship {
         this._orientation = orientation;
     }
 
-    public hasBeenHit(coordinate: Coordinate): Boolean {
+    public hasBeenHit(coordinate: Coordinate): boolean {
         if (!this._head || this._orientation === null) {
             throw new WarshipNotPlacedException();
         }
 
-        let hasHit: Boolean = false;
+        let hasHit: boolean = false;
 
         switch (this._orientation) {
             case Orientation.NORTH:
-                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + (this._size - 1))) && this._head.x === coordinate.x;
+                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + (this._size - 1)))
+                    && this._head.x === coordinate.x;
                 break;
             case Orientation.SOUTH:
-                hasHit = ((this._head.y - (this._size - 1)) <= coordinate.y && coordinate.y <= this._head.y) && this._head.x === coordinate.x;
+                hasHit = ((this._head.y - (this._size - 1)) <= coordinate.y && coordinate.y <= this._head.y)
+                    && this._head.x === coordinate.x;
                 break;
             case Orientation.EAST:
-                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + (this._size - 1))) && this._head.y === coordinate.y;
+                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + (this._size - 1)))
+                    && this._head.y === coordinate.y;
                 break;
             case Orientation.WEST:
-                hasHit = ((this._head.x - (this._size - 1)) <= coordinate.x && coordinate.x <= this._head.x) && this._head.y === coordinate.y;
+                hasHit = ((this._head.x - (this._size - 1)) <= coordinate.x && coordinate.x <= this._head.x)
+                    && this._head.y === coordinate.y;
                 break;
         }
 
@@ -79,33 +88,31 @@ export abstract class Warship {
         return hasHit;
     }
 
-
-    collide(warship: Warship): Boolean {
+    public collide(warship: Warship): boolean {
         return false;
     }
 
-
-    class(): WarshipClass {
+    public class(): WarshipClass {
         return this._class;
     }
 
-    size(): number {
+    public size(): number {
         return this._size;
     }
 
-    partStatus(): Array<WarshipPartStatus> {
+    public partStatus(): WarshipPartStatus[] {
         return this._partStatus;
     }
 
-    isAlive(): Boolean {
+    public isAlive(): boolean {
         return this._isAlive;
     }
 
-    head(): Coordinate {
+    public head(): Coordinate {
         return this._head;
     }
 
-    orientation(): Orientation {
+    public orientation(): Orientation {
         return this._orientation;
     }
 
@@ -131,31 +138,6 @@ export abstract class Warship {
 
         this._partStatus[hitPosition] = WarshipPartStatus.HIT;
 
-        this._isAlive = this._partStatus.includes(WarshipPartStatus.NOMINAL)
-    }
-}
-
-export class Carrier extends Warship{
-    constructor() {
-        super(4, WarshipClass.CARRIER);
-    }
-}
-
-export class Destroyer extends Warship{
-    constructor() {
-        super(3, WarshipClass.DESTROYER);
-    }
-}
-
-export class Cruiser extends Warship{
-    constructor() {
-        super(2, WarshipClass.CRUISER);
-
-    }
-}
-
-export class Frigate extends Warship{
-    constructor() {
-        super(1, WarshipClass.FRIGATE);
+        this._isAlive = this._partStatus.includes(WarshipPartStatus.NOMINAL);
     }
 }

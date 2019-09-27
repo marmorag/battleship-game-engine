@@ -1,13 +1,13 @@
-import {Grid} from "./Grid";
-import {RandomPicker} from "../utils/RandomPicker";
-import {Player, ShotStatus, Team} from "./Player";
-import {Coordinate, GameConfig, InvalidPlayerException, InvalidGameStatusException} from "..";
+import {Coordinate, GameConfig, InvalidGameStatusException, InvalidPlayerException} from "..";
 import {GameResult} from "../utils/GameResult";
 import {GameStatsTracker} from "../utils/GameStatsTracker";
+import {RandomPicker} from "../utils/RandomPicker";
+import {Grid} from "./Grid";
+import {Player, ShotStatus, Team} from "./Player";
 
 export class Game {
-    private _hasStarted: Boolean = false;
-    private _hasEnded: Boolean = false;
+    private _hasStarted: boolean = false;
+    private _hasEnded: boolean = false;
     private _gameStatsTracker: GameStatsTracker;
 
     private _playerWhite: Player;
@@ -16,13 +16,17 @@ export class Game {
     private _currentTarget: Player = null;
     private _gameResult: GameResult = null;
 
-    start(whitePlayer: Player, blackPlayer: Player, config: GameConfig = GameConfig.getDefault()) {
+    public start(whitePlayer: Player, blackPlayer: Player, config: GameConfig = null) {
+        if (!config) {
+            config = new GameConfig();
+        }
+
         if (this._hasStarted) {
             return;
         }
 
         if (whitePlayer.team === blackPlayer.team) {
-            throw new InvalidPlayerException('Both player can\'t belong to the same team.');
+            throw new InvalidPlayerException("Both player can't belong to the same team.");
         }
 
         this._playerWhite = whitePlayer;
@@ -33,20 +37,20 @@ export class Game {
         this._gameStatsTracker = new GameStatsTracker();
     }
 
-    playTurn(coordinate: Coordinate): ShotStatus {
+    public playTurn(coordinate: Coordinate): ShotStatus {
         if (!this._hasStarted) {
-            throw new InvalidGameStatusException('Tha game has not been initialized yet.');
+            throw new InvalidGameStatusException("Tha game has not been initialized yet.");
         }
 
         if (this._hasEnded) {
-            throw new InvalidGameStatusException('Tha game has ended.');
+            throw new InvalidGameStatusException("Tha game has ended.");
         }
 
         if (!this._playerBlack.isReady || !this._playerBlack.isReady) {
-            throw new InvalidPlayerException('At least one player is not ready to play. Try to place boat before.');
+            throw new InvalidPlayerException("At least one player is not ready to play. Try to place boat before.");
         }
 
-        let turnStatus = this._currentTarget.hit(coordinate);
+        const turnStatus = this._currentTarget.hit(coordinate);
 
         this._gameStatsTracker.logTurn();
 
@@ -59,7 +63,7 @@ export class Game {
         return turnStatus;
     }
 
-    get hasStarted(): Boolean {
+    get hasStarted(): boolean {
         return this._hasStarted;
     }
 
@@ -73,7 +77,7 @@ export class Game {
 
     get gameResult(): GameResult {
         if (!this._hasEnded) {
-            throw new InvalidGameStatusException('The game has not yet ended. Please retry after some turn.');
+            throw new InvalidGameStatusException("The game has not yet ended. Please retry after some turn.");
         }
         return this._gameResult;
     }
@@ -98,12 +102,12 @@ export class Game {
 
     private _randomStart() {
         this._currentPlayer = RandomPicker.randomFromArray([this._playerBlack, this._playerWhite]);
-        this._currentTarget = (this._currentPlayer.team === Team.BLACK)? this._playerWhite : this._playerBlack;
+        this._currentTarget = (this._currentPlayer.team === Team.BLACK) ? this._playerWhite : this._playerBlack;
     }
 
     private _definedStart(config: GameConfig) {
         if (config.playerOrder[0].team === config.playerOrder[1].team) {
-            throw new InvalidPlayerException('The both provided player belong to the same team. Try with different player instead.');
+            throw new InvalidPlayerException("The both provided player belong to the same team. Try with different player instead.");
         }
 
         this._currentPlayer = config.playerOrder[0];

@@ -2,7 +2,7 @@ export class GameStatsTracker {
 
     private _turnPlayed: number = 0;
 
-    logTurn() {
+    public logTurn() {
         this._turnPlayed++;
     }
 

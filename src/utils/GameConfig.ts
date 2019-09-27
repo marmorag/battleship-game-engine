@@ -7,23 +7,19 @@ export const LARGE_SIZE_GRID = 15;
 
 export class GameConfig {
     public gridSize: number = 10;
-    private _randomStart: Boolean = true;
-    private _playerOrder: Array<Player> = [];
+    private _randomStart: boolean = true;
+    private _playerOrder: Player[] = [];
 
-    static getDefault(): GameConfig {
-        return new GameConfig();
-    }
-
-    defineStart(firstPlayer: Player, secondPlayer: Player) {
+    public defineStart(firstPlayer: Player, secondPlayer: Player) {
         this._randomStart = false;
         this._playerOrder = [firstPlayer, secondPlayer];
     }
 
-    get randomStart(): Boolean {
+    get randomStart(): boolean {
         return this._randomStart;
     }
 
-    get playerOrder(): Array<Player> {
+    get playerOrder(): Player[] {
         return this._playerOrder;
     }
 
@@ -31,7 +27,7 @@ export class GameConfig {
         if (3 <= this.gridSize && this.gridSize <= SMALL_SIZE_GRID) {
             return [
                 new Destroyer(),
-                new Frigate()
+                new Frigate(),
             ];
         } else if (this.gridSize <= MEDIUM_SIZE_GRID) {
             return [
