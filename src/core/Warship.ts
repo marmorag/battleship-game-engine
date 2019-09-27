@@ -26,11 +26,16 @@ export enum WarshipPlacementStatus {
 }
 
 export abstract class Warship {
-    protected _class: WarshipClass;
-    protected _size: number;
     protected _partStatus: WarshipPartStatus[];
     protected _isAlive: boolean;
-
+    /**
+     * Identifier about warship class and so, its size
+     */
+    protected _class: WarshipClass;
+    /**
+     * The size of the warship
+     */
+    protected _size: number;
     /**
      * Head of the ship coordinate
      */
