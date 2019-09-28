@@ -66,32 +66,11 @@ export abstract class Warship {
             throw new WarshipNotPlacedException();
         }
 
-        let hasHit: boolean = false;
-
-        switch (this._orientation) {
-            case Orientation.NORTH:
-                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + (this._size - 1)))
-                    && this._head.x === coordinate.x;
-                break;
-            case Orientation.SOUTH:
-                hasHit = ((this._head.y - (this._size - 1)) <= coordinate.y && coordinate.y <= this._head.y)
-                    && this._head.x === coordinate.x;
-                break;
-            case Orientation.EAST:
-                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + (this._size - 1)))
-                    && this._head.y === coordinate.y;
-                break;
-            case Orientation.WEST:
-                hasHit = ((this._head.x - (this._size - 1)) <= coordinate.x && coordinate.x <= this._head.x)
-                    && this._head.y === coordinate.y;
-                break;
-        }
-
-        if (hasHit) {
+        if (CollisionDetector.detectShotCollision(coordinate, this) === CollisionStatus.COLLIDE) {
             this._updateStatus(coordinate);
+            return true;
         }
-
-        return hasHit;
+        return false;
     }
 
     public collide(warship: Warship): boolean {

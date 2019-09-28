@@ -1,6 +1,6 @@
 import {Coordinate, GameConfig, InvalidGameStatusException, InvalidPlayerException} from "..";
-import {GameResult} from "../utils/GameResult";
-import {GameStatsTracker} from "../utils/GameStatsTracker";
+import {GameResult} from "..";
+import {GameStatsTracker} from "..";
 import {RandomPicker} from "../utils/RandomPicker";
 import {Grid} from "./Grid";
 import {Player, ShotStatus, Team} from "./Player";

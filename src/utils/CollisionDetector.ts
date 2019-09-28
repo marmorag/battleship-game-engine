@@ -18,6 +18,12 @@ export class CollisionDetector {
         return CollisionDetector._collide(originCoordinate, testedCoordinate);
     }
 
+    public static detectShotCollision(shotFired: Coordinate, warship: Warship): CollisionStatus {
+        const warshipCoordinates = this._processCoordinate(warship);
+
+        return this._collide([shotFired], warshipCoordinates);
+    }
+
     public static _collide(originCoordinates: Coordinate[], testedCoordinates: Coordinate[]): CollisionStatus {
         for (const originCoordinate of originCoordinates) {
             for (const testedCoordinate of testedCoordinates) {
