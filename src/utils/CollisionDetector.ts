@@ -24,6 +24,48 @@ export class CollisionDetector {
         return this._collide([shotFired], warshipCoordinates);
     }
 
+    public static detectBorderCollision(
+        coordinate: Coordinate,
+        orientation: Orientation,
+        warship: Warship,
+        size: number,
+    ) {
+        let maxY;
+        let minY;
+        let maxX;
+        let minX;
+        let placeable: boolean;
+
+        switch (orientation) {
+            case Orientation.EAST:
+                minX = coordinate.x;
+                maxX = coordinate.x + (warship.size() - 1);
+                placeable = (0 <= coordinate.y && coordinate.y <= size - 1)
+                    && (0 <= minX && maxX <= size - 1);
+                break;
+            case Orientation.WEST:
+                maxX = coordinate.x;
+                minX = coordinate.x - (warship.size() - 1);
+                placeable = (0 <= coordinate.y && coordinate.y <= size - 1)
+                    && (0 <= minX && maxX <= size - 1);
+                break;
+            case Orientation.NORTH:
+                minY = coordinate.y;
+                maxY = coordinate.y + (warship.size() - 1);
+                placeable = (0 <= coordinate.x && coordinate.x <= size - 1)
+                    && (0 <= minY && maxY <= size - 1);
+                break;
+            case Orientation.SOUTH:
+                maxY = coordinate.y;
+                minY = coordinate.y - (warship.size() - 1);
+                placeable = (0 <= coordinate.x && coordinate.x <= size - 1)
+                    && (0 <= minY && maxY <= size - 1);
+                break;
+        }
+
+        return (placeable) ? CollisionStatus.MISS : CollisionStatus.COLLIDE;
+    }
+
     public static _collide(originCoordinates: Coordinate[], testedCoordinates: Coordinate[]): CollisionStatus {
         for (const originCoordinate of originCoordinates) {
             for (const testedCoordinate of testedCoordinates) {
