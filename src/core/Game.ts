@@ -1,11 +1,11 @@
 import {Coordinate, GameConfig, InvalidGameStatusException, InvalidPlayerException} from "..";
 import {GameResult} from "..";
 import {GameStatsTracker} from "..";
+import {ShotStatus} from "..";
+import {Team} from "..";
 import {RandomPicker} from "../utils/RandomPicker";
 import {Grid} from "./Grid";
 import {Player} from "./Player";
-import {Team} from "../utils/enum/Team";
-import {ShotStatus} from "../utils/enum/ShotStatus";
 
 export class Game {
     private _hasStarted: boolean = false;

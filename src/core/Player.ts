@@ -1,8 +1,8 @@
 import {Coordinate, InvalidPlacementException, Orientation} from "..";
 import {ShotStatus, Team} from "..";
+import {WarshipPlacementStatus} from "..";
 import {Grid} from "./Grid";
 import {Warship} from "./Warship";
-import {WarshipPlacementStatus} from "../utils/enum/WarshipPlacementStatus";
 
 export class Player {
     private readonly _team: Team;
