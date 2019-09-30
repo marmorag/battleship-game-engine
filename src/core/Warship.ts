@@ -1,29 +1,7 @@
-import {
-    Coordinate,
-    InvalidOrientationException,
-    Orientation,
-    WarshipAlreadyPlacedException,
-    WarshipNotPlacedException,
-} from "..";
+import {Coordinate, Orientation} from "..";
+import {WarshipClass, WarshipPartStatus} from "..";
+import {InvalidOrientationException, WarshipAlreadyPlacedException, WarshipNotPlacedException} from "..";
 import {CollisionDetector, CollisionStatus} from "../utils/CollisionDetector";
-
-export enum WarshipClass {
-    CARRIER,
-    DESTROYER,
-    CRUISER,
-    FRIGATE,
-}
-
-export enum WarshipPartStatus {
-    NOMINAL,
-    HIT,
-}
-
-export enum WarshipPlacementStatus {
-    OUTBOUND,
-    COLLIDE,
-    AVAILABLE,
-}
 
 export abstract class Warship {
     protected _partStatus: WarshipPartStatus[];

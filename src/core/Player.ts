@@ -1,17 +1,8 @@
 import {Coordinate, InvalidPlacementException, Orientation} from "..";
+import {ShotStatus, Team} from "..";
 import {Grid} from "./Grid";
-import {Warship, WarshipPlacementStatus} from "./Warship";
-
-export enum Team {
-    WHITE,
-    BLACK,
-}
-
-export enum ShotStatus {
-    HIT,
-    MISS,
-    SINK,
-}
+import {Warship} from "./Warship";
+import {WarshipPlacementStatus} from "../utils/enum/WarshipPlacementStatus";
 
 export class Player {
     private readonly _team: Team;

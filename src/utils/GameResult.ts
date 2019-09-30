@@ -1,5 +1,5 @@
 import {Player} from "..";
-import {GameStatsTracker} from "./GameStatsTracker";
+import {GameStatsTracker} from "./stats/GameStatsTracker";
 
 export class GameResult {
     private readonly _winner: Player;

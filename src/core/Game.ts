@@ -3,7 +3,9 @@ import {GameResult} from "..";
 import {GameStatsTracker} from "..";
 import {RandomPicker} from "../utils/RandomPicker";
 import {Grid} from "./Grid";
-import {Player, ShotStatus, Team} from "./Player";
+import {Player} from "./Player";
+import {Team} from "../utils/enum/Team";
+import {ShotStatus} from "../utils/enum/ShotStatus";
 
 export class Game {
     private _hasStarted: boolean = false;
@@ -52,7 +54,7 @@ export class Game {
 
         const turnStatus = this._currentTarget.hit(coordinate);
 
-        this._gameStatsTracker.logTurn();
+        this._gameStatsTracker.logTurn(this._currentPlayer, this._currentTarget, coordinate, turnStatus);
 
         if (!this._currentTarget.isAlive) {
             this._endGame();
