@@ -115,6 +115,26 @@ describe("Behavior", () => {
             expect(gameResult.looser).toStrictEqual(anakin);
             expect(gameResult.tracker.turnPlayed).toBe(9);
         });
+
+        it("should be able to generate result report", () => {
+            expect(game.gameResult.stats).toStrictEqual({
+                looser: anakin,
+                played: 9,
+                winner: obiWan,
+                [Team.WHITE]: {
+                    accuracy: 4 / 5,
+                    finalGrid: obiWan.grid,
+                    hit: 4,
+                    played: 5,
+                },
+                [Team.BLACK]: {
+                    accuracy: 0 / 4,
+                    finalGrid: anakin.grid,
+                    hit: 0,
+                    played: 4,
+                },
+            });
+        });
     });
 });
 

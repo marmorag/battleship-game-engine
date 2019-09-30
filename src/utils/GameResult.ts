@@ -23,4 +23,12 @@ export class GameResult {
     get tracker(): GameStatsTracker {
         return this._tracker;
     }
+
+    get stats(): object {
+        return {
+            looser: this._looser,
+            winner: this._winner,
+            ...this._tracker.getReport(),
+        };
+    }
 }
