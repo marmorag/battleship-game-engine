@@ -21,38 +21,10 @@ export class Player {
         this._team = team;
     }
 
-    get grid(): Grid {
-        return this._grid;
-    }
-
-    set grid(value: Grid) {
-        this._grid = value;
-    }
-
-    get warships(): Warship[] {
-        return this._grid.warshipPositions;
-    }
-
-    set warships(value: Warship[]) {
-        this._grid.warshipPositions = value;
-    }
-
-    get team(): Team {
-        return this._team;
-    }
-
-    get isAlive(): boolean {
-        if (!this._grid) {
-            return true;
-        }
-
-        const alive: boolean[] = [];
-        for (const wahrsip of this.warships) {
-            alive.push(wahrsip.isAlive());
-        }
-        return alive.includes(true);
-    }
-
+    /**
+     * Hit the player at the given coordinates
+     * @param coordinate
+     */
     public hit(coordinate: Coordinate): ShotStatus {
         let hasHit: boolean = false;
         let destroyed: boolean = false;
@@ -70,6 +42,7 @@ export class Player {
     }
 
     /**
+     * Place the warship given coordinates and orientation
      * @param coordinate
      * @param orientation
      * @param warship
@@ -88,6 +61,18 @@ export class Player {
         }
     }
 
+    get isAlive(): boolean {
+        if (!this._grid) {
+            return true;
+        }
+
+        const alive: boolean[] = [];
+        for (const wahrsip of this.warships) {
+            alive.push(wahrsip.isAlive());
+        }
+        return alive.includes(true);
+    }
+
     get isReady(): boolean {
         if (!this._grid) {
             return false;
@@ -99,5 +84,25 @@ export class Player {
         }
 
         return ready;
+    }
+
+    get grid(): Grid {
+        return this._grid;
+    }
+
+    set grid(value: Grid) {
+        this._grid = value;
+    }
+
+    get warships(): Warship[] {
+        return this._grid.warshipPositions;
+    }
+
+    set warships(value: Warship[]) {
+        this._grid.warshipPositions = value;
+    }
+
+    get team(): Team {
+        return this._team;
     }
 }
