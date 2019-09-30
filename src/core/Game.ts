@@ -24,7 +24,7 @@ export class Game {
         }
 
         if (this._hasStarted) {
-            return;
+            throw new InvalidGameStatusException("The game has already started.");
         }
 
         if (whitePlayer.team === blackPlayer.team) {

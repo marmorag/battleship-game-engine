@@ -1,5 +1,15 @@
-import {Coordinate, Game, GameConfig, Orientation, Player, ShotStatus, Team, WarshipPartStatus} from "../src";
-import {SMALL_SIZE_GRID} from "../src/utils/GameConfig";
+import {
+    Coordinate,
+    Game,
+    GameConfig,
+    InvalidGameStatusException, InvalidPlayerException,
+    Orientation,
+    Player,
+    ShotStatus,
+    Team,
+    WarshipPartStatus,
+} from "../src";
+import {SMALL_SIZE_GRID} from "../src";
 
 describe("Behavior", () => {
 
@@ -135,11 +145,72 @@ describe("Behavior", () => {
                 },
             });
         });
+
+        it("should throw an exception if we try to play another turn", () => {
+            expect(() => game.playTurn(new Coordinate(0, 0))).toThrowError(InvalidGameStatusException);
+        });
     });
 });
 
 describe("Error case", () => {
     it("should throw exception if game not started and try to play a turn", () => {
-        expect(2).toBe(2);
+        const game = new Game();
+
+        expect(() => game.playTurn(new Coordinate(0, 0))).toThrowError(InvalidGameStatusException);
+    });
+
+    it("should throw exception if both player belong to the same team", () => {
+        const game = new Game();
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.WHITE);
+
+        expect(() => game.start(obiWan, anakin)).toThrowError(InvalidPlayerException);
+    });
+
+    it("should throw error if game has already started and try to start it again", () => {
+        const game = new Game();
+        const gameConfig = new GameConfig();
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.BLACK);
+
+        gameConfig.gridSize = 5;
+
+        game.start(obiWan, anakin, gameConfig);
+
+        expect(() => game.start(obiWan, anakin, gameConfig)).toThrowError(InvalidGameStatusException);
+    });
+
+    it("should throw an exception if we try to get the report ans game has not ended", () => {
+        const game = new Game();
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.BLACK);
+        game.start(obiWan, anakin);
+
+        expect(() => game.gameResult).toThrowError(InvalidGameStatusException);
+    });
+
+    it("should throw an exception if player provided in start config belong to the same team", () => {
+        const game = new Game();
+        const gameConfig = new GameConfig();
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.BLACK);
+
+        gameConfig.gridSize = 5;
+        gameConfig.defineStart(obiWan, obiWan);
+
+        expect(() => game.start(obiWan, anakin, gameConfig)).toThrowError(InvalidPlayerException);
+    });
+
+    it("should throw an exception if both player is not ready", () => {
+        const game = new Game();
+        const gameConfig = new GameConfig();
+        const obiWan = new Player(Team.WHITE);
+        const anakin = new Player(Team.BLACK);
+
+        gameConfig.gridSize = 5;
+
+        game.start(obiWan, anakin, gameConfig);
+
+        expect(() => game.playTurn(new Coordinate(0, 0))).toThrowError(InvalidPlayerException);
     });
 });
