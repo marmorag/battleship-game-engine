@@ -1,35 +1,19 @@
-import {
-    Coordinate,
-    InvalidOrientationException,
-    Orientation,
-    WarshipAlreadyPlacedException,
-    WarshipNotPlacedException,
-} from "..";
-
-export enum WarshipClass {
-    CARRIER,
-    DESTROYER,
-    CRUISER,
-    FRIGATE,
-}
-
-export enum WarshipPartStatus {
-    NOMINAL,
-    HIT,
-}
-
-export enum WarshipPlacementStatus {
-    OUTBOUND,
-    COLLIDE,
-    AVAILABLE,
-}
+import {Coordinate, Orientation} from "..";
+import {WarshipClass, WarshipPartStatus} from "..";
+import {InvalidOrientationException, WarshipAlreadyPlacedException, WarshipNotPlacedException} from "..";
+import {CollisionDetector, CollisionStatus} from "../utils/CollisionDetector";
 
 export abstract class Warship {
-    protected _class: WarshipClass;
-    protected _size: number;
     protected _partStatus: WarshipPartStatus[];
     protected _isAlive: boolean;
-
+    /**
+     * Identifier about warship class and so, its size
+     */
+    protected _class: WarshipClass;
+    /**
+     * The size of the warship
+     */
+    protected _size: number;
     /**
      * Head of the ship coordinate
      */
@@ -60,36 +44,15 @@ export abstract class Warship {
             throw new WarshipNotPlacedException();
         }
 
-        let hasHit: boolean = false;
-
-        switch (this._orientation) {
-            case Orientation.NORTH:
-                hasHit = (this._head.y <= coordinate.y && coordinate.y <= (this._head.y + (this._size - 1)))
-                    && this._head.x === coordinate.x;
-                break;
-            case Orientation.SOUTH:
-                hasHit = ((this._head.y - (this._size - 1)) <= coordinate.y && coordinate.y <= this._head.y)
-                    && this._head.x === coordinate.x;
-                break;
-            case Orientation.EAST:
-                hasHit = (this._head.x <= coordinate.x && coordinate.x <= (this._head.x + (this._size - 1)))
-                    && this._head.y === coordinate.y;
-                break;
-            case Orientation.WEST:
-                hasHit = ((this._head.x - (this._size - 1)) <= coordinate.x && coordinate.x <= this._head.x)
-                    && this._head.y === coordinate.y;
-                break;
-        }
-
-        if (hasHit) {
+        if (CollisionDetector.detectShotCollision(coordinate, this) === CollisionStatus.COLLIDE) {
             this._updateStatus(coordinate);
+            return true;
         }
-
-        return hasHit;
+        return false;
     }
 
     public collide(warship: Warship): boolean {
-        return false;
+        return CollisionDetector.detectWarshipCollision(this, warship) === CollisionStatus.COLLIDE;
     }
 
     public class(): WarshipClass {

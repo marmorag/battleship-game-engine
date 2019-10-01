@@ -1,5 +1,5 @@
 import {Player} from "..";
-import {GameStatsTracker} from "./GameStatsTracker";
+import {GameStatsTracker} from "./stats/GameStatsTracker";
 
 export class GameResult {
     private readonly _winner: Player;
@@ -22,5 +22,13 @@ export class GameResult {
 
     get tracker(): GameStatsTracker {
         return this._tracker;
+    }
+
+    get stats(): object {
+        return {
+            looser: this._looser,
+            winner: this._winner,
+            ...this._tracker.getReport(),
+        };
     }
 }

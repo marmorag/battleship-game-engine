@@ -1,9 +1,11 @@
 import {Coordinate, GameConfig, InvalidGameStatusException, InvalidPlayerException} from "..";
-import {GameResult} from "../utils/GameResult";
-import {GameStatsTracker} from "../utils/GameStatsTracker";
+import {GameResult} from "..";
+import {GameStatsTracker} from "..";
+import {ShotStatus} from "..";
+import {Team} from "..";
 import {RandomPicker} from "../utils/RandomPicker";
 import {Grid} from "./Grid";
-import {Player, ShotStatus, Team} from "./Player";
+import {Player} from "./Player";
 
 export class Game {
     private _hasStarted: boolean = false;
@@ -22,7 +24,7 @@ export class Game {
         }
 
         if (this._hasStarted) {
-            return;
+            throw new InvalidGameStatusException("The game has already started.");
         }
 
         if (whitePlayer.team === blackPlayer.team) {
@@ -52,7 +54,7 @@ export class Game {
 
         const turnStatus = this._currentTarget.hit(coordinate);
 
-        this._gameStatsTracker.logTurn();
+        this._gameStatsTracker.logTurn(this._currentPlayer, this._currentTarget, coordinate, turnStatus);
 
         if (!this._currentTarget.isAlive) {
             this._endGame();
